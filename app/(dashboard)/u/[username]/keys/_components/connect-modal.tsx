@@ -25,15 +25,15 @@ import { createIngress } from '@/actions/ingress';
 import { IngressInput } from 'livekit-server-sdk';
 import { toast } from 'sonner';
 
-const RTPM = String(IngressInput.RTMP_INPUT);
+const RTMP = String(IngressInput.RTMP_INPUT);
 const WHIP = String(IngressInput.WHIP_INPUT);
 
-type IngressType = typeof RTPM | typeof WHIP;
+type IngressType = typeof RTMP | typeof WHIP;
 
 export const ConnectModal = () => {
   const closeRef = useRef<ElementRef<'button'>>(null);
   const [isPending, startTransition] = useTransition();
-  const [ingressType, setIngressType] = useState<IngressType>(RTPM);
+  const [ingressType, setIngressType] = useState<IngressType>(RTMP);
 
   const onSubmit = () => {
     startTransition(() => {
@@ -66,7 +66,7 @@ export const ConnectModal = () => {
           <SelectTrigger className='w-full'>
             <SelectValue placeholder='Ingress Type' />
             <SelectContent>
-              <SelectItem value={RTPM}>RTMP</SelectItem>
+              <SelectItem value={RTMP}>RTMP</SelectItem>
               <SelectItem value={WHIP}>WHIP</SelectItem>
             </SelectContent>
           </SelectTrigger>
