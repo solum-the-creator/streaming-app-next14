@@ -1,13 +1,14 @@
 'use client';
 
 import { Stream, User } from '@prisma/client';
-import { ChatToggle, LiveKitRoom } from '@livekit/components-react';
+import { LiveKitRoom } from '@livekit/components-react';
 
 import { cn } from '@/lib/utils';
 import { useChatSidebar } from '@/store/use-chat-sidebar';
 import { useViewerToken } from '@/hooks/use-viewer-token';
 import { Video } from './video';
 import { Chat } from './chat';
+import { ChatToggle } from './chat-toggle';
 
 interface StreamPlayerProps {
   user: User & { stream: Stream | null };
