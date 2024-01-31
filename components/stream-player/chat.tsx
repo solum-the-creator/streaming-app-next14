@@ -12,6 +12,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import { ChatHeader } from './chat-header';
 import { ChatForm } from './chat-form';
+import { ChatList } from './chat-list';
 
 interface ChatProps {
   viewerName: string;
@@ -55,15 +56,13 @@ export const Chat = ({
   }, [messages]);
 
   const onSubmit = () => {
-    if (!send) {
-      return;
-    }
+    if (!send) return;
 
     send(value);
     setValue('');
   };
 
-  const onChange = () => {
+  const onChange = (value: string) => {
     setValue(value);
   };
 
@@ -72,6 +71,7 @@ export const Chat = ({
       <ChatHeader />
       {variant === ChatVariant.CHAT && (
         <>
+          <ChatList messages={reversedMessages} isHidden={isHidden} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
