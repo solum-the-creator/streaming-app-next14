@@ -1,6 +1,11 @@
 'use client';
 
+import { toast } from 'sonner';
 import { useState, useTransition, useRef, ElementRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { Trash } from 'lucide-react';
+import Image from 'next/image';
+
 import {
   Dialog,
   DialogClose,
@@ -9,16 +14,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '../ui/button';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
+import { Hint } from '@/components/hint';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { updateStream } from '@/actions/stream';
-import { toast } from 'sonner';
 import { UploadDropzone } from '@/lib/uploadthing';
-import { useRouter } from 'next/navigation';
-import { Hint } from '../hint';
-import { Trash } from 'lucide-react';
-import Image from 'next/image';
 
 interface InfoModalProps {
   initialName: string;
@@ -32,6 +33,7 @@ export const InfoModal = ({
   const router = useRouter();
   const closeRef = useRef<ElementRef<'button'>>(null);
   const [isPending, startTransition] = useTransition();
+
   const [name, setName] = useState(initialName);
   const [thumbnailUrl, setThumbnailUrl] = useState(initialThumbnailUrl);
 
@@ -67,7 +69,7 @@ export const InfoModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={'link'} size={'sm'} className='ml-auto'>
+        <Button variant='link' size='sm' className='ml-auto'>
           Edit
         </Button>
       </DialogTrigger>
@@ -79,19 +81,18 @@ export const InfoModal = ({
           <div className='space-y-2'>
             <Label>Name</Label>
             <Input
+              disabled={isPending}
               placeholder='Stream name'
               onChange={onChange}
               value={name}
-              disabled={isPending}
             />
           </div>
-
           <div className='space-y-2'>
             <Label>Thumbnail</Label>
             {thumbnailUrl ? (
               <div className='relative aspect-video rounded-xl overflow-hidden border border-white/10'>
                 <div className='absolute top-2 right-2 z-[10]'>
-                  <Hint asChild side='left' label='Remove thumbnail'>
+                  <Hint label='Remove thumbnail' asChild side='left'>
                     <Button
                       type='button'
                       disabled={isPending}
@@ -103,9 +104,9 @@ export const InfoModal = ({
                   </Hint>
                 </div>
                 <Image
-                  fill
                   alt='Thumbnail'
                   src={thumbnailUrl}
+                  fill
                   className='object-cover'
                 />
               </div>
@@ -115,10 +116,10 @@ export const InfoModal = ({
                   endpoint='thumbnailUploader'
                   appearance={{
                     label: {
-                      color: '#ffffff',
+                      color: '#FFFFFF',
                     },
                     allowedContent: {
-                      color: '#ffffff',
+                      color: '#FFFFFF',
                     },
                   }}
                   onClientUploadComplete={(res) => {
@@ -130,14 +131,13 @@ export const InfoModal = ({
               </div>
             )}
           </div>
-
           <div className='flex justify-between'>
             <DialogClose ref={closeRef} asChild>
-              <Button type='button' variant={'ghost'}>
+              <Button type='button' variant='ghost'>
                 Cancel
               </Button>
             </DialogClose>
-            <Button variant={'primary'} type='submit' disabled={isPending}>
+            <Button disabled={isPending} variant='primary' type='submit'>
               Save
             </Button>
           </div>
