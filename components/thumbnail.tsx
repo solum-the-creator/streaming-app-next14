@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { UserAvatar } from './user-avatar';
 import { Skeleton } from './ui/skeleton';
+import { LiveBadge } from './live-badge';
 
 interface ThumbnailProps {
   src: string | null;
@@ -51,6 +52,11 @@ export const Thumbnail = ({
           flex items-center justify-center'
       />
       {content}
+      {isLive && src && (
+        <div className='absolute top-2 left-2 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform'>
+          <LiveBadge />
+        </div>
+      )}
     </div>
   );
 };
